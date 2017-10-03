@@ -1,0 +1,16 @@
+[
+    {
+        "id": 0,
+        "damage": 6,
+        "speed": 1,
+        "range": 2,
+        "criticalValue": 0.4
+    },
+    {
+        "id": 1,
+        "damage": 2,
+        "speed": 13,
+        "range": 25,
+        "criticalValue": 0.7
+    }
+]

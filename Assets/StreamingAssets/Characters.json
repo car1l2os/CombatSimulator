@@ -1,0 +1,22 @@
+[
+    {
+        "id": 0,
+        "hp": 30,
+        "acc": 6,
+        "strenght": 1,
+        "power": 2,
+        "criticalChance": 4,
+        "agility": 4,
+        "shield": 2
+    },
+    {
+        "id": 1,
+        "hp": 30,
+        "acc": 5,
+        "strenght": 3,
+        "power": 6,
+        "criticalChance": 1,
+        "agility": 2,
+        "shield": 6
+    }
+]
