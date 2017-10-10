@@ -8,13 +8,26 @@ public class MenuScript : MonoBehaviour {
 
     public GameObject firstMenu;
     public GameObject secondMenu;
+	public GameObject thirdMenu;
+
+	public InputField ID;
+	public InputField Hp;
+	public InputField Acc;
+	public InputField Strenght;
+	public InputField Power;
+	public InputField criticalchance;
+	public InputField agility;
+	public InputField shield;
 
     public Database database;
 
     private int loading = 0;
+	private int creating = 0;
 
     private Character player_1;
     private Character player_2;
+
+	//private Character CreatedPlayer;
 
     private CombatSimulator combatSimulator;
 
@@ -52,9 +65,25 @@ public class MenuScript : MonoBehaviour {
         loading = 1;
     }
 
+	public void submitButton()
+	{
+		thirdMenu.SetActive(false);
+		Character CreatedPlayer = new Character (float.Parse(ID.text),float.Parse(Hp.text),float.Parse(Acc.text),float.Parse(Strenght.text),float.Parse(Power.text),float.Parse(criticalchance.text),float.Parse(agility.text),float.Parse(shield.text));
+
+		if(loading == 1)
+		{
+			player_1 = CreatedPlayer;
+		}
+		else if(loading == 2)
+		{
+			player_2 = CreatedPlayer;
+		}
+	}
+
     public void createButton_1()
     {
-
+		thirdMenu.SetActive(true);
+		creating = 1;
     }
 
     public void loadButton_2()
@@ -65,7 +94,8 @@ public class MenuScript : MonoBehaviour {
 
     public void createButton_2()
     {
-
+		thirdMenu.SetActive(true);
+		creating = 2;
     }
 
     void button_load(int button)
