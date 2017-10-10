@@ -18,7 +18,6 @@ public class Database : MonoBehaviour {
 
         ConstructItemDatabase(itemData);
         ConstructCharacterDatabase(characterData);
-        int a = 2;
     }
 
 
@@ -169,6 +168,7 @@ public class Character
     public float criticalChance { get; set; }
     public float agility { get; set; }
     public float shield { get; set; }
+    public Item gun { get; set; }
 
     public Character(float id, float hp, float acc, float strenght, float power, float critical, float agility, float shield)
     {
