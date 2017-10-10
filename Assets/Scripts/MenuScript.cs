@@ -50,6 +50,8 @@ public class MenuScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Debug.Log(player_1);
+        Debug.Log(player_2);
 	}
 
 
@@ -68,13 +70,15 @@ public class MenuScript : MonoBehaviour {
 	public void submitButton()
 	{
 		thirdMenu.SetActive(false);
-		Character CreatedPlayer = new Character (float.Parse(ID.text),float.Parse(Hp.text),float.Parse(Acc.text),float.Parse(Strenght.text),float.Parse(Power.text),float.Parse(criticalchance.text),float.Parse(agility.text),float.Parse(shield.text));
+        firstMenu.SetActive(true);
+        secondMenu.SetActive(false);
+        Character CreatedPlayer = new Character (float.Parse(ID.text),float.Parse(Hp.text),float.Parse(Acc.text),float.Parse(Strenght.text),float.Parse(Power.text),float.Parse(criticalchance.text),float.Parse(agility.text),float.Parse(shield.text));
 
-		if(loading == 1)
+		if(creating == 1)
 		{
 			player_1 = CreatedPlayer;
 		}
-		else if(loading == 2)
+		else if(creating == 2)
 		{
 			player_2 = CreatedPlayer;
 		}
@@ -83,6 +87,8 @@ public class MenuScript : MonoBehaviour {
     public void createButton_1()
     {
 		thirdMenu.SetActive(true);
+        firstMenu.SetActive(false);
+        secondMenu.SetActive(false);
 		creating = 1;
     }
 
@@ -95,6 +101,8 @@ public class MenuScript : MonoBehaviour {
     public void createButton_2()
     {
 		thirdMenu.SetActive(true);
+        firstMenu.SetActive(false);
+        secondMenu.SetActive(false);
 		creating = 2;
     }
 
