@@ -50,20 +50,15 @@ public class MenuScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(player_1);
-        Debug.Log(player_2);
+        //Debug.Log(player_1);
+        //Debug.Log(player_2);
 	}
-
-
-    void changeMenu()
-    {
-        firstMenu.SetActive(!firstMenu.activeSelf);
-        secondMenu.SetActive(!firstMenu.activeSelf);
-    }
 
     public void loadButton_1()
     {
-        changeMenu();
+        firstMenu.SetActive(false);
+        secondMenu.SetActive(true);
+        thirdMenu.SetActive(false);
         loading = 1;
     }
 
@@ -94,7 +89,9 @@ public class MenuScript : MonoBehaviour {
 
     public void loadButton_2()
     {
-        changeMenu();
+        firstMenu.SetActive(false);
+        secondMenu.SetActive(true);
+        thirdMenu.SetActive(false);
         loading = 2;
     }
 
@@ -117,7 +114,9 @@ public class MenuScript : MonoBehaviour {
             player_2 = database.getCharacterById(button);
         }
 
-        changeMenu();
+        firstMenu.SetActive(true);
+        secondMenu.SetActive(false);
+        thirdMenu.SetActive(false);
     }
 
     public void button_1()

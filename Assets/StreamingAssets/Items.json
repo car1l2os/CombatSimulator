@@ -4,13 +4,15 @@
         "damage": 5,
         "speed": 1.5,
         "range": 50,
-        "criticalValue": 10
+        "criticalValue": 10,
+        "criticalChance":  5
     },
     {
         "id": 1,
         "damage": 2,
         "speed": 13,
         "range": 25,
-        "criticalValue": 0.7
+        "criticalValue": 0.7,
+        "criticalChance": 0.5
     }
 ]

@@ -18,13 +18,17 @@ public class Database : MonoBehaviour {
 
         ConstructItemDatabase(itemData);
         ConstructCharacterDatabase(characterData);
+        foreach (Character character in characterDataBase) //temporal
+        {
+            character.gun = itemDataBase[0];
+        }
     }
 
 
 
     public Item getItemById(int id)
     {
-        for(int i=0; i< itemDataBase.Count;i++)
+        for (int i = 0; i < itemDataBase.Count; i++)
         {
             if (itemDataBase[i].ID == id)
                 return itemDataBase[i];
@@ -57,7 +61,8 @@ public class Database : MonoBehaviour {
                                         obj["damage"].n,
                                         obj["speed"].n,
                                         obj["range"].n,
-                                        obj["criticalValue"].n
+                                        obj["criticalValue"].n,
+                                        obj["criticalChance"].n
                                         ));
 
 
@@ -134,14 +139,16 @@ public class Item
     public float speed { get; set; }
     public float range { get; set; }
     public float criticalValue { get; set; }
+    public float criticalChance { get; set; }
 
-    public Item(float id, float damage, float speed, float range, float criticalValue)
+    public Item(float id, float damage, float speed, float range, float criticalValue, float criticalChance)
     {
         this.ID = id;
         this.damage = damage;
         this.speed = speed;
         this.range = range;
         this.criticalValue = criticalValue;
+        this.criticalChance = criticalChance;
     }
 
     public Item(float id, float damage)
@@ -151,6 +158,7 @@ public class Item
         this.speed = 1;
         this.range = 1;
         this.criticalValue = 0;
+        this.criticalChance = 0;
     }
 
     public Item()
