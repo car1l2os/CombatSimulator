@@ -6,8 +6,8 @@ using System;
 
 public class Database : MonoBehaviour {
 
-    private List<Item> itemDataBase = new List<Item>();
-    private List<Character> characterDataBase = new List<Character>();
+    public List<Item> itemDataBase = new List<Item>();
+    public List<Character> characterDataBase = new List<Character>();
 
     private JSONObject itemData, characterData;
 

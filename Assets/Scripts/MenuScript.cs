@@ -68,6 +68,7 @@ public class MenuScript : MonoBehaviour {
         firstMenu.SetActive(true);
         secondMenu.SetActive(false);
         Character CreatedPlayer = new Character (float.Parse(ID.text),float.Parse(Hp.text),float.Parse(Acc.text),float.Parse(Strenght.text),float.Parse(Power.text),float.Parse(criticalchance.text),float.Parse(agility.text),float.Parse(shield.text));
+        CreatedPlayer.gun = database.itemDataBase[0];
 
 		if(creating == 1)
 		{
