@@ -12,7 +12,7 @@ public class CombatSimulator : MonoBehaviour {
     float timer_1, timer_2;
 
 
-    float hitChance, cc, cc2, cv, cv2, damage2, dmg; //Cv used in da mage2 and 3 but they re going to be 0 always
+    float hitChance, cc, cc2, cv, cv2, damage2, dmg; //Cv used in da mage2 and 3 but th ey re going to be 0 always
 
     int hitslanded = 0;
     int hitslanded2 = 0;
