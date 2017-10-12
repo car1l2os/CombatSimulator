@@ -9,8 +9,10 @@ public class MenuScript : MonoBehaviour {
     public GameObject firstMenu;
     public GameObject secondMenu;
 	public GameObject thirdMenu;
+    public GameObject fourthMenu;
 
-	public InputField ID;
+
+    public InputField ID;
 	public InputField Hp;
 	public InputField Acc;
 	public InputField Strenght;
@@ -59,6 +61,7 @@ public class MenuScript : MonoBehaviour {
         firstMenu.SetActive(false);
         secondMenu.SetActive(true);
         thirdMenu.SetActive(false);
+        fourthMenu.SetActive(false);
         loading = 1;
     }
 
@@ -85,7 +88,8 @@ public class MenuScript : MonoBehaviour {
 		thirdMenu.SetActive(true);
         firstMenu.SetActive(false);
         secondMenu.SetActive(false);
-		creating = 1;
+        fourthMenu.SetActive(false);
+        creating = 1;
     }
 
     public void loadButton_2()
@@ -93,6 +97,7 @@ public class MenuScript : MonoBehaviour {
         firstMenu.SetActive(false);
         secondMenu.SetActive(true);
         thirdMenu.SetActive(false);
+        fourthMenu.SetActive(false);
         loading = 2;
     }
 
@@ -101,7 +106,8 @@ public class MenuScript : MonoBehaviour {
 		thirdMenu.SetActive(true);
         firstMenu.SetActive(false);
         secondMenu.SetActive(false);
-		creating = 2;
+        fourthMenu.SetActive(false);
+        creating = 2;
     }
 
     void button_load(int button)
@@ -118,6 +124,7 @@ public class MenuScript : MonoBehaviour {
         firstMenu.SetActive(true);
         secondMenu.SetActive(false);
         thirdMenu.SetActive(false);
+        fourthMenu.SetActive(false);
     }
 
     public void button_1()
@@ -163,7 +170,14 @@ public class MenuScript : MonoBehaviour {
     public void button_play()
     {
         if (player_1 != null && player_2 != null)
+        {
             StartCombat();
+            firstMenu.SetActive(false);
+            secondMenu.SetActive(false);
+            thirdMenu.SetActive(false);
+            fourthMenu.SetActive(true);
+        }
+
     }
 
     private void StartCombat()

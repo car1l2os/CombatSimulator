@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatSimulator : MonoBehaviour {
 
     Character player_1, player_2;
+    public Text textBox;
 
     float timer_1, timer_2;
 
@@ -48,7 +50,9 @@ public class CombatSimulator : MonoBehaviour {
         if (player_1.hp > 0 && player_2.hp > 0)
         {
             Debug.Log("--- New round --- ");
-            AttackFromTo(ref player_1, ref player_2);
+            textBox.text += "---New round---\n";
+
+           AttackFromTo(ref player_1, ref player_2);
             AttackFromTo(ref player_2, ref player_1);
         }
 
@@ -64,6 +68,7 @@ public class CombatSimulator : MonoBehaviour {
             {
                 cv = UnityEngine.Random.Range(1, (from.gun.criticalValue + from.criticalChance));  //cv = UnityEngine.Random.Range(1, (pistol[3] + Character[4]));
                 Debug.Log("PLAYER CRIT FOR: " + cv);
+                textBox.text += "PLAYER CRIT FOR: " + cv + "\n";
             }
             else //No critic
                 cv = 0;
@@ -75,5 +80,8 @@ public class CombatSimulator : MonoBehaviour {
         }
 
         Debug.Log(">>>Character with ID " + to.ID + " has " + to.hp + " HP now");
+        textBox.text += ">>> Character with ID " + to.ID + " has " + to.hp + " HP now" +  "\n";
     }
+
+
 }
