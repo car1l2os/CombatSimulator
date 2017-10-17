@@ -11,7 +11,7 @@ public class MenuScript : MonoBehaviour {
 	public GameObject thirdMenu;
     public GameObject fourthMenu;
 
-
+    [Header ("Imputs")]
     public InputField ID;
 	public InputField Hp;
 	public InputField Acc;
@@ -20,6 +20,7 @@ public class MenuScript : MonoBehaviour {
 	public InputField criticalchance;
 	public InputField agility;
 	public InputField shield;
+    public InputField battles;
 
     public Database database;
 
@@ -61,7 +62,7 @@ public class MenuScript : MonoBehaviour {
         firstMenu.SetActive(false);
         secondMenu.SetActive(true);
         thirdMenu.SetActive(false);
-        fourthMenu.SetActive(false);
+        //fourthMenu.SetActive(false);
         loading = 1;
     }
 
@@ -88,7 +89,7 @@ public class MenuScript : MonoBehaviour {
 		thirdMenu.SetActive(true);
         firstMenu.SetActive(false);
         secondMenu.SetActive(false);
-        fourthMenu.SetActive(false);
+        //fourthMenu.SetActive(false);
         creating = 1;
     }
 
@@ -97,7 +98,7 @@ public class MenuScript : MonoBehaviour {
         firstMenu.SetActive(false);
         secondMenu.SetActive(true);
         thirdMenu.SetActive(false);
-        fourthMenu.SetActive(false);
+        //fourthMenu.SetActive(false);
         loading = 2;
     }
 
@@ -106,7 +107,7 @@ public class MenuScript : MonoBehaviour {
 		thirdMenu.SetActive(true);
         firstMenu.SetActive(false);
         secondMenu.SetActive(false);
-        fourthMenu.SetActive(false);
+        //fourthMenu.SetActive(false);
         creating = 2;
     }
 
@@ -124,7 +125,7 @@ public class MenuScript : MonoBehaviour {
         firstMenu.SetActive(true);
         secondMenu.SetActive(false);
         thirdMenu.SetActive(false);
-        fourthMenu.SetActive(false);
+        //fourthMenu.SetActive(false);
     }
 
     public void button_1()
@@ -169,19 +170,31 @@ public class MenuScript : MonoBehaviour {
     }
     public void button_play()
     {
-        if (player_1 != null && player_2 != null)
-        {
-            StartCombat();
-            firstMenu.SetActive(false);
-            secondMenu.SetActive(false);
-            thirdMenu.SetActive(false);
-            fourthMenu.SetActive(true);
-        }
+        
+
+            if (player_1 != null && player_2 != null && battles.text != "")
+            {
+                StartCombat(int.Parse(battles.text));
+                firstMenu.SetActive(false);
+                secondMenu.SetActive(false);
+                thirdMenu.SetActive(false);
+                //fourthMenu.SetActive(true);
+            }
 
     }
 
-    private void StartCombat()
+    private void StartCombat(int num)
     {
-        combatSimulator.StartCombat(player_1, player_2);
+        for(int i=0;i<num;i++)
+        {
+            Debug.Log("New battle:" + i);
+            combatSimulator.StartCombat(player_1, player_2);
+        }
+
+        if(combatSimulator.player_1_wins + combatSimulator.player_2_wins >= num)
+        {
+            combatSimulator.eventLog.AddEvent("Player 1 has won: " + combatSimulator.player_1_wins.ToString());
+            combatSimulator.eventLog.AddEvent("Player 2 has won: " + combatSimulator.player_2_wins.ToString());
+        }
     }
 }

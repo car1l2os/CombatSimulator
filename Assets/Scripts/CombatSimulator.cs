@@ -11,30 +11,48 @@ public class CombatSimulator : MonoBehaviour {
 
     float timer_1, timer_2;
 
+    public CombatLog eventLog;
+
 
     float hitChance, cc, cc2, cv, cv2, damage2, dmg; //Cv used in da mage2 and 3 but th ey re going to be 0 always
 
     int hitslanded = 0;
     int hitslanded2 = 0;
 
+    public int player_1_wins = 0;
+    public int player_2_wins = 0;
+
     private void Start()
     {
         timer_1 = 0;
         timer_2 = 0;
+        eventLog = GetComponent<CombatLog>();
+
     }
 
     public void StartCombat(Character player_1, Character player_2)
     {
         this.player_1 = player_1;
         this.player_2 = player_2;
+        eventLog.visible = true;
     }
 
-    private void FixedUpdate()
+    private void Battle() //Modify this function to make it work 
     {
         if (player_1 != null && player_2 != null)
         {
             PrepareCombat();
-            Simulate();
+            int result = Simulate();
+
+            if (result == 0)
+            {
+                player_1_wins++;
+                player_2_wins++;
+            }
+            else if (result == 1)
+                player_1_wins++;
+            else if (result == 2)
+                player_2_wins++;
         }
     }
 
@@ -45,17 +63,40 @@ public class CombatSimulator : MonoBehaviour {
         cc2 = 7.3f;        //cc2 = (pistol[4] + Enemy[4])
     }
 
-    private void Simulate()
+    private int Simulate()
     {
         if (player_1.hp > 0 && player_2.hp > 0)
         {
             Debug.Log("--- New round --- ");
-            textBox.text += "---New round---\n";
+            //textBox.text += "---New round---\n";ç
+            //eventLog.AddEvent("--- New round --- ");
 
            AttackFromTo(ref player_1, ref player_2);
-            AttackFromTo(ref player_2, ref player_1);
+           AttackFromTo(ref player_2, ref player_1);
         }
 
+
+
+        if (player_1.hp < 0 && player_2.hp < 0)
+        {
+            player_1 = null;
+            player_2 = null;
+            return 0;
+        }
+        else if (player_1.hp < 0)
+        {
+            player_1 = null;
+            player_2 = null;
+            return 1;
+        }
+        else if (player_2.hp < 0)
+        {
+            player_1 = null;
+            player_2 = null;
+            return 2;
+        }
+
+        return -1;
     }
 
     private void AttackFromTo(ref Character from, ref Character to)
@@ -67,8 +108,9 @@ public class CombatSimulator : MonoBehaviour {
             if (UnityEngine.Random.Range(0, 101) <= cc) //Critic
             {
                 cv = UnityEngine.Random.Range(1, (from.gun.criticalValue + from.criticalChance));  //cv = UnityEngine.Random.Range(1, (pistol[3] + Character[4]));
-                Debug.Log("PLAYER CRIT FOR: " + cv);
-                textBox.text += "PLAYER CRIT FOR: " + cv + "\n";
+                //Debug.Log("PLAYER CRIT FOR: " + cv);
+                //eventLog.AddEvent("PLAYER CRIT FOR: " + cv);
+                //textBox.text += "PLAYER CRIT FOR: " + cv + "\n";
             }
             else //No critic
                 cv = 0;
@@ -79,8 +121,10 @@ public class CombatSimulator : MonoBehaviour {
             to.hp -= dmg;
         }
 
-        Debug.Log(">>>Character with ID " + to.ID + " has " + to.hp + " HP now");
-        textBox.text += ">>> Character with ID " + to.ID + " has " + to.hp + " HP now" +  "\n";
+        //Debug.Log(">>>Character with ID " + to.ID + " has " + to.hp + " HP now");
+        //textBox.text += ">>> Character with ID " + to.ID + " has " + to.hp + " HP now" +  "\n";
+        //eventLog.AddEvent(">>> Character with ID " + to.ID + " has " + to.hp + " HP now" +  "\n");
+
     }
 
 
