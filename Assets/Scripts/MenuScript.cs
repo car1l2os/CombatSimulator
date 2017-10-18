@@ -30,6 +30,9 @@ public class MenuScript : MonoBehaviour {
     private Character player_1;
     private Character player_2;
 
+	private float player_1_health;
+	private float player_2_health;
+
 	//private Character CreatedPlayer;
 
     private CombatSimulator combatSimulator;
@@ -170,7 +173,8 @@ public class MenuScript : MonoBehaviour {
     }
     public void button_play()
     {
-        
+			player_1_health = player_1.hp;
+			player_2_health = player_2.hp;
 
             if (player_1 != null && player_2 != null && battles.text != "")
             {
@@ -188,13 +192,21 @@ public class MenuScript : MonoBehaviour {
         for(int i=0;i<num;i++)
         {
             Debug.Log("New battle:" + i);
+			player_2.hp = player_2_health;
+			player_1.hp = player_1_health;
             combatSimulator.StartCombat(player_1, player_2);
         }
 
+		Debug.Log("player 1: " + combatSimulator.player_1_wins);
+		Debug.Log("player 2: " + combatSimulator.player_2_wins);
+
         if(combatSimulator.player_1_wins + combatSimulator.player_2_wins >= num)
         {
-            combatSimulator.eventLog.AddEvent("Player 1 has won: " + combatSimulator.player_1_wins.ToString());
-            combatSimulator.eventLog.AddEvent("Player 2 has won: " + combatSimulator.player_2_wins.ToString());
+            //combatSimulator.eventLog.AddEvent("Player 1 has won: " + combatSimulator.player_1_wins.ToString());
+            //combatSimulator.eventLog.AddEvent("Player 2 has won: " + combatSimulator.player_2_wins.ToString());
         }
+
+		combatSimulator.player_1_wins = 0;
+		combatSimulator.player_2_wins = 0;
     }
 }

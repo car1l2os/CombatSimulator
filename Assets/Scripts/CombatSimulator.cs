@@ -26,7 +26,7 @@ public class CombatSimulator : MonoBehaviour {
     {
         timer_1 = 0;
         timer_2 = 0;
-        eventLog = GetComponent<CombatLog>();
+       // eventLog = GetComponent<CombatLog>();
 
     }
 
@@ -34,7 +34,8 @@ public class CombatSimulator : MonoBehaviour {
     {
         this.player_1 = player_1;
         this.player_2 = player_2;
-        eventLog.visible = true;
+        //eventLog.visible = true;
+		Battle();
     }
 
     private void Battle() //Modify this function to make it work 
@@ -43,16 +44,23 @@ public class CombatSimulator : MonoBehaviour {
         {
             PrepareCombat();
             int result = Simulate();
-
-            if (result == 0)
-            {
-                player_1_wins++;
-                player_2_wins++;
-            }
-            else if (result == 1)
-                player_1_wins++;
-            else if (result == 2)
-                player_2_wins++;
+				
+			if (result == -1)
+				Battle ();
+			else if (result == 0) {
+				player_1_wins++;
+				player_2_wins++;
+				player_1 = null;
+				player_2 = null;
+			} else if (result == 1) {
+				player_1_wins++;
+				player_1 = null;
+				player_2 = null;
+			} else if (result == 2) {
+				player_2_wins++;
+				player_1 = null;
+				player_2 = null;
+			}
         }
     }
 
@@ -77,22 +85,16 @@ public class CombatSimulator : MonoBehaviour {
 
 
 
-        if (player_1.hp < 0 && player_2.hp < 0)
+        if (player_1.hp <= 0 && player_2.hp <= 0)
         {
-            player_1 = null;
-            player_2 = null;
             return 0;
         }
-        else if (player_1.hp < 0)
+        else if (player_1.hp <= 0)
         {
-            player_1 = null;
-            player_2 = null;
             return 1;
         }
-        else if (player_2.hp < 0)
+        else if (player_2.hp <= 0)
         {
-            player_1 = null;
-            player_2 = null;
             return 2;
         }
 
