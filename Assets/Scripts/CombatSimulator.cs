@@ -75,7 +75,7 @@ public class CombatSimulator : MonoBehaviour {
     {
         if (player_1.hp > 0 && player_2.hp > 0)
         {
-            Debug.Log("--- New round --- ");
+            //Debug.Log("--- New round --- ");
             //textBox.text += "---New round---\n";ç
             //eventLog.AddEvent("--- New round --- ");
 

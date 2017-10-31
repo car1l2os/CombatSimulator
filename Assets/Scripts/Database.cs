@@ -106,7 +106,8 @@ public class Database : MonoBehaviour {
                                         characterData["power"].n,
                                         characterData["criticalChance"].n,
                                         characterData["agility"].n,
-                                        characterData["shield"].n));
+                                        characterData["shield"].n,
+                                        characterData["name"].str));
 
 
                 break;
@@ -176,9 +177,10 @@ public class Character
     public float criticalChance { get; set; }
     public float agility { get; set; }
     public float shield { get; set; }
+    public string name { get; set; }
     public Item gun { get; set; }
 
-    public Character(float id, float hp, float acc, float strenght, float power, float critical, float agility, float shield)
+    public Character(float id, float hp, float acc, float strenght, float power, float critical, float agility, float shield,string name)
     {
         this.ID = id;
         this.hp = hp;
@@ -188,6 +190,7 @@ public class Character
         this.criticalChance = critical;
         this.agility = agility;
         this.shield = shield;
+        this.name = name;
     }
 
     public Character(float id, float hp)
