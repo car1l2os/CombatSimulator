@@ -1,0 +1,60 @@
+[
+    {
+        "id": 0,
+        "hp": 100,
+        "acc": 90,
+        "strenght": 10,
+        "power": 10,
+        "criticalChance": 10,
+        "agility": 1,
+        "shield": 1,
+        "name": "Human Tech"
+    },
+    {
+        "id": 1,
+        "hp": 90,
+        "acc": 75,
+        "strenght": 9,
+        "power": 30,
+        "criticalChance": 15,
+        "agility": 1,
+        "shield": 1,
+        "name": "Human Mage"
+
+    },
+    {
+        "id": 2,
+        "hp": 110,
+        "acc": 100,
+        "strenght": 8,
+        "power": 19,
+        "criticalChance": 16,
+        "agility": 2,
+        "shield": 2,
+        "name": "Alien Tech"
+
+    },
+    {
+        "id": 3,
+        "hp": 120,
+        "acc": 60,
+        "strenght": 8,
+        "power": 28,
+        "criticalChance": 16,
+        "agility": 1,
+        "shield": 3,
+        "name": "Alien Mage"
+
+    },
+    {
+        "id": 4,
+        "hp": 140,
+        "acc": 60,
+        "strenght": 14,
+        "power": 23,
+        "criticalChance": 14,
+        "agility": 2,
+        "shield": 3,
+        "name": "Enemy"
+    }
+]
