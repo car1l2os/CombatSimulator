@@ -26,7 +26,7 @@ public class Database : MonoBehaviour {
 
 
 
-    public Item getItemById(int id)
+    /*public Item getItemById(int id)
     {
         for (int i = 0; i < itemDataBase.Count; i++)
         {
@@ -34,12 +34,23 @@ public class Database : MonoBehaviour {
                 return itemDataBase[i];
         }
         return null;
-    }
-    public Character getCharacterById(int id)
+    }*/
+     
+    /*public Character getCharacterById(int id) ------------>Change data base to make it work only with name and no with ID. No sense ID
     {
         for (int i = 0; i < characterDataBase.Count; i++)
         {
             if (characterDataBase[i].ID == id)
+                return characterDataBase[i];
+        }
+        return null;
+    }*/
+
+    public Character getCharacterByName(string name)
+    {
+        for (int i = 0; i < characterDataBase.Count; i++)
+        {
+            if (characterDataBase[i].name == name)
                 return characterDataBase[i];
         }
         return null;

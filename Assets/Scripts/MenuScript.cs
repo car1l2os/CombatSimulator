@@ -11,6 +11,7 @@ public class MenuScript : MonoBehaviour
     public GameObject secondMenu;
     public GameObject thirdMenu;
     public GameObject fourthMenu;
+    public GameObject fifthMenu;
 
     [Header("Imputs")]
     public InputField ID;
@@ -96,6 +97,7 @@ public class MenuScript : MonoBehaviour
         secondMenu.SetActive(true);
         thirdMenu.SetActive(false);
         fourthMenu.SetActive(false);
+        fifthMenu.SetActive(false);
         loading = 1;
     }
 
@@ -104,6 +106,8 @@ public class MenuScript : MonoBehaviour
         thirdMenu.SetActive(false);
         firstMenu.SetActive(true);
         secondMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
         float n;
 
         if (float.TryParse(Hp.text, out n) &&
@@ -153,6 +157,8 @@ public class MenuScript : MonoBehaviour
         firstMenu.SetActive(false);
         secondMenu.SetActive(false);
         fourthMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
         creating = 1;
     }
 
@@ -162,6 +168,8 @@ public class MenuScript : MonoBehaviour
         secondMenu.SetActive(true);
         thirdMenu.SetActive(false);
         fourthMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
         loading = 2;
     }
 
@@ -171,6 +179,8 @@ public class MenuScript : MonoBehaviour
         firstMenu.SetActive(false);
         secondMenu.SetActive(false);
         fourthMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
         creating = 2;
     }
 
@@ -205,6 +215,8 @@ public class MenuScript : MonoBehaviour
         secondMenu.SetActive(false);
         thirdMenu.SetActive(false);
         fourthMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
     }
 
     public void button_1()
@@ -254,6 +266,8 @@ public class MenuScript : MonoBehaviour
         thirdMenu.SetActive(false);
         secondMenu.SetActive(false);
         fourthMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
 
         //To be sure that everything is like at the beggining...
         player_1 = null;
@@ -261,7 +275,31 @@ public class MenuScript : MonoBehaviour
         creating = 0;
         num = 0;
         simulating_flag = false;
+
+
+        firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText("No MOB selected");
+        firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText("No MOB selected");
+
+        firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText();
+        firstMenu.transform.GetChild(0).GetChild(6).GetComponent<button_controller>().setPreviousText();
     }
+
+    public void main_menu_preserving_mobs()
+    {
+        firstMenu.SetActive(true);
+        thirdMenu.SetActive(false);
+        secondMenu.SetActive(false);
+        fourthMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
+        creating = 0;
+        num = 0;
+        simulating_flag = false;
+
+        firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText();
+        firstMenu.transform.GetChild(0).GetChild(6).GetComponent<button_controller>().setPreviousText();
+    }
+
 
     public void button_play()
     {
@@ -279,6 +317,8 @@ public class MenuScript : MonoBehaviour
                 thirdMenu.SetActive(false);
                 fourthMenu.SetActive(true);
                 fourthMenu.transform.GetChild(5).gameObject.SetActive(false);
+                fifthMenu.SetActive(false);
+
             }
             else
             {
@@ -356,5 +396,34 @@ public class MenuScript : MonoBehaviour
             //combatSimulator.eventLog.AddEvent("Player 1 has won: " + combatSimulator.player_1_wins.ToString());
             //combatSimulator.eventLog.AddEvent("Player 2 has won: " + combatSimulator.player_2_wins.ToString());
         }
+    }
+
+    public string[] getInfoMOB(int number)
+    {
+        if (number != 1 && number != 2 ) return null;
+
+        if (number == 1 && player_1 != null)
+            return new string[] {player_1.name,
+                                    player_1.hp.ToString(),
+                                    player_1.acc.ToString(),
+                                    player_1.strenght.ToString(),
+                                    player_1.power.ToString(),
+                                    player_1.criticalChance.ToString(),
+                                    player_1.agility.ToString(),
+                                    player_1.shield.ToString()};
+        if (number == 2 && player_2 != null)
+        {
+            return new string[] {player_2.name,
+                                        player_2.hp.ToString(),
+                                        player_2.acc.ToString(),
+                                        player_2.strenght.ToString(),
+                                        player_2.power.ToString(),
+                                        player_2.criticalChance.ToString(),
+                                        player_2.agility.ToString(),
+                                        player_2.shield.ToString()};
+        }
+        else
+            return null; //Required MOB/player that doesn't exist
+
     }
 }
