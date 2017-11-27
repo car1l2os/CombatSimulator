@@ -110,8 +110,7 @@ public class Database : MonoBehaviour {
                     //Debug.Log(characterData["id"]);
                     ConstructItemDatabase(j);
                 }
-                characterDataBase.Add(new Character(characterData["id"].n,
-                                        characterData["hp"].n,
+                characterDataBase.Add(new Character(characterData["hp"].n,
                                         characterData["acc"].n,
                                         characterData["strenght"].n,
                                         characterData["power"].n,
@@ -180,7 +179,6 @@ public class Item
 }
 public class Character
 {
-    public float ID { get; set; }
     public float hp { get; set; }
     public float acc { get; set; }
     public float strenght { get; set; }
@@ -191,9 +189,8 @@ public class Character
     public string name { get; set; }
     public Item gun { get; set; }
 
-    public Character(float id, float hp, float acc, float strenght, float power, float critical, float agility, float shield,string name)
+    public Character(float hp, float acc, float strenght, float power, float critical, float agility, float shield,string name)
     {
-        this.ID = id;
         this.hp = hp;
         this.acc = acc;
         this.strenght = strenght;
@@ -204,14 +201,8 @@ public class Character
         this.name = name;
     }
 
-    public Character(float id, float hp)
-    {
-        this.ID = id;
-        this.hp = hp;
-    }
-
     public Character()
     {
-        this.ID = -1;
+        this.name = "Foo";
     }
 }

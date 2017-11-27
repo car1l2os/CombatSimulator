@@ -1,6 +1,5 @@
 [
     {
-        "id": 0,
         "hp": 100,
         "acc": 90,
         "strenght": 10,
@@ -11,7 +10,6 @@
         "name": "Human Tech"
     },
     {
-        "id": 1,
         "hp": 90,
         "acc": 75,
         "strenght": 9,
@@ -23,7 +21,6 @@
 
     },
     {
-        "id": 2,
         "hp": 110,
         "acc": 100,
         "strenght": 8,
@@ -35,7 +32,6 @@
 
     },
     {
-        "id": 3,
         "hp": 120,
         "acc": 60,
         "strenght": 8,
@@ -47,7 +43,6 @@
 
     },
     {
-        "id": 4,
         "hp": 140,
         "acc": 60,
         "strenght": 14,
@@ -57,4 +52,4 @@
         "shield": 3,
         "name": "Enemy"
     }
-]
+]   

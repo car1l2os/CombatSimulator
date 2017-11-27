@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +16,6 @@ public class MenuScript : MonoBehaviour
     public GameObject fifthMenu;
 
     [Header("Imputs")]
-    public InputField ID;
     public InputField Hp;
     public InputField Acc;
     public InputField Strenght;
@@ -38,8 +39,6 @@ public class MenuScript : MonoBehaviour
     private int num;
 
     private bool simulating_flag = false;
-
-    private float last_id = 10;
 
     //private Character CreatedPlayer;
 
@@ -67,13 +66,13 @@ public class MenuScript : MonoBehaviour
 
         for (int i = 0; i < secondMenu.transform.childCount; i++)
         {
-            string id = "-";
-            if (database.getCharacterById(i) != null)
+            string txt = "-";
+            if (i < database.characterDataBase.Count)
             {
-                id = database.getCharacterById(i).name;
+                txt = database.characterDataBase[i].name;
             }
 
-            secondMenu.transform.GetChild(i).GetComponentInChildren<Text>().text = id;
+            secondMenu.transform.GetChild(i).GetComponentInChildren<Text>().text = txt;
         }
     }
 
@@ -119,8 +118,7 @@ public class MenuScript : MonoBehaviour
             float.TryParse(shield.text, out n)
             )
         {
-            Character CreatedPlayer = new Character(last_id, float.Parse(Hp.text), float.Parse(Acc.text), float.Parse(Strenght.text), float.Parse(Power.text), float.Parse(criticalchance.text), float.Parse(agility.text), float.Parse(shield.text), "CreatedCharacter");
-            last_id++;
+            Character CreatedPlayer = new Character(float.Parse(Hp.text), float.Parse(Acc.text), float.Parse(Strenght.text), float.Parse(Power.text), float.Parse(criticalchance.text), float.Parse(agility.text), float.Parse(shield.text), "CreatedCharacter");
             CreatedPlayer.gun = database.itemDataBase[0];
 
             if (creating == 1)
@@ -135,6 +133,15 @@ public class MenuScript : MonoBehaviour
                 p2.text = "Custom MOB";
                 p2Combat.text = "Custom MOB";
             }
+
+            AddToDataBaseFile(new string[] {'"'+"hp"+'"' + ": " +               CreatedPlayer.hp.ToString(),
+                                            '"'+"acc"+'"' + ": " +              CreatedPlayer.acc.ToString(),
+                                            '"'+"strenght"+'"' + ": " +         CreatedPlayer.strenght.ToString(),
+                                            '"'+"power"+'"' + ": " +            CreatedPlayer.power.ToString(),
+                                            '"'+"criticalChance"+'"' + ": " +   CreatedPlayer.criticalChance.ToString(),
+                                            '"'+"agility"+'"' + ": " +          CreatedPlayer.agility.ToString(),
+                                            '"'+"shield"+'"' + ": " +           CreatedPlayer.shield.ToString(),
+                                            '"'+"name"+'"' + ": " +             CreatedPlayer.name});
         }
         else
         {
@@ -149,6 +156,23 @@ public class MenuScript : MonoBehaviour
                 player_2 = null;
             }
         }
+    }
+
+    public void AddToDataBaseFile(string[] characterInfoToAdd) //Base from: https://stackoverflow.com/questions/16212127/add-a-new-line-at-a-specific-position-in-a-text-file
+    {
+        string fileName = Application.dataPath + "/StreamingAssets/Characters.json";
+
+        List<string> txtLines = File.ReadAllLines(fileName).ToList();       
+        txtLines[txtLines.Count - 2] = txtLines[txtLines.Count - 2] + ",";
+
+        txtLines.Insert(txtLines.Count - 2, "{"); //open object
+        for (int i=0;i<characterInfoToAdd.Length;i++)
+        {
+            txtLines.Insert(txtLines.Count-2, characterInfoToAdd[i]);               //Insert the line you want to add last under the tag 'item1'.
+        }
+        txtLines.Insert(txtLines.Count - 2, "}"); //close object
+
+        File.WriteAllLines(fileName, txtLines.ToArray());                           //Add the lines including the new one.
     }
 
     public void createButton_1()
@@ -188,10 +212,11 @@ public class MenuScript : MonoBehaviour
     {
         if (loading == 1)
         {
-            Character aux = database.getCharacterById(button);
+            string name = secondMenu.transform.GetChild(button).GetComponentInChildren<Text>().text;
+            Character aux = database.getCharacterByName(name);
             if (aux != null)
             {
-                player_1 = new Character(aux.ID, aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
+                player_1 = new Character(aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
                 player_1.gun = aux.gun;
                 p1.text = aux.name;
                 p1Combat.text = aux.name;
@@ -200,10 +225,11 @@ public class MenuScript : MonoBehaviour
         }
         else if (loading == 2)
         {
-            Character aux = database.getCharacterById(button);
+            string name = secondMenu.transform.GetChild(button).GetComponentInChildren<Text>().text;
+            Character aux = database.getCharacterByName(name);
             if (aux != null)
             {
-                player_2 = new Character(aux.ID, aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
+                player_2 = new Character(aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
                 player_2.gun = aux.gun;
                 p2.text = aux.name;
                 p2Combat.text = aux.name;
