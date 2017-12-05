@@ -24,27 +24,16 @@ public class Database : MonoBehaviour {
         }
     }
 
-
-
-    /*public Item getItemById(int id)
+    public void AddCharacterToDataBase(string obj_info)
     {
-        for (int i = 0; i < itemDataBase.Count; i++)
-        {
-            if (itemDataBase[i].ID == id)
-                return itemDataBase[i];
-        }
-        return null;
-    }*/
-     
-    /*public Character getCharacterById(int id) ------------>Change data base to make it work only with name and no with ID. No sense ID
+        characterData = new JSONObject(obj_info);
+        ConstructCharacterDatabase(characterData);
+    }
+
+    public void DeleteCharacterFromDatabase(Character toDelete)
     {
-        for (int i = 0; i < characterDataBase.Count; i++)
-        {
-            if (characterDataBase[i].ID == id)
-                return characterDataBase[i];
-        }
-        return null;
-    }*/
+        characterDataBase.Remove(toDelete);
+    }
 
     public Character getCharacterByName(string name)
     {

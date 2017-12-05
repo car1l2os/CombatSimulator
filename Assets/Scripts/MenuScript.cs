@@ -16,6 +16,7 @@ public class MenuScript : MonoBehaviour
     public GameObject fifthMenu;
 
     [Header("Imputs")]
+    public InputField NameInput;
     public InputField Hp;
     public InputField Acc;
     public InputField Strenght;
@@ -49,6 +50,7 @@ public class MenuScript : MonoBehaviour
     private Text p2;
     private Text p1Combat;
     private Text p2Combat;
+    private Color initColor;
 
     // Use this for initialization
     void Start()
@@ -61,19 +63,11 @@ public class MenuScript : MonoBehaviour
         p2 = GameObject.Find("Player2_Text").GetComponent<Text>();
         p1Combat = GameObject.Find("Player_1_text_combat").GetComponent<Text>();
         p2Combat = GameObject.Find("Player_2_text_combat").GetComponent<Text>();
+        initColor = fourthMenu.transform.GetChild(0).GetComponent<Text>().color;
         fourthMenu.SetActive(false);
 
+        SetButtonsLoadMenu();
 
-        for (int i = 0; i < secondMenu.transform.childCount; i++)
-        {
-            string txt = "-";
-            if (i < database.characterDataBase.Count)
-            {
-                txt = database.characterDataBase[i].name;
-            }
-
-            secondMenu.transform.GetChild(i).GetComponentInChildren<Text>().text = txt;
-        }
     }
 
     // Update is called once per frame
@@ -88,6 +82,20 @@ public class MenuScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
+    }
+
+    void SetButtonsLoadMenu()
+    {
+        for (int i = 0; i < secondMenu.transform.childCount; i++)
+        {
+            string txt = "-";
+            if (i < database.characterDataBase.Count)
+            {
+                txt = database.characterDataBase[i].name;
+            }
+
+            secondMenu.transform.GetChild(i).GetComponentInChildren<Text>().text = txt;
+        }
     }
 
     public void loadButton_1()
@@ -109,7 +117,8 @@ public class MenuScript : MonoBehaviour
 
         float n;
 
-        if (float.TryParse(Hp.text, out n) &&
+        if (NameInput.text != "" &&
+            float.TryParse(Hp.text, out n) &&
             float.TryParse(Acc.text, out n) &&
             float.TryParse(Strenght.text, out n) &&
             float.TryParse(Power.text, out n) &&
@@ -118,39 +127,93 @@ public class MenuScript : MonoBehaviour
             float.TryParse(shield.text, out n)
             )
         {
-            Character CreatedPlayer = new Character(float.Parse(Hp.text), float.Parse(Acc.text), float.Parse(Strenght.text), float.Parse(Power.text), float.Parse(criticalchance.text), float.Parse(agility.text), float.Parse(shield.text), "CreatedCharacter");
+            Character CreatedPlayer = new Character(float.Parse(Hp.text), float.Parse(Acc.text), float.Parse(Strenght.text), float.Parse(Power.text), float.Parse(criticalchance.text), float.Parse(agility.text), float.Parse(shield.text), NameInput.text);
             CreatedPlayer.gun = database.itemDataBase[0];
 
             if (creating == 1)
             {
                 player_1 = CreatedPlayer;
-                p1.text = "Custom MOB";
-                p1Combat.text = "Custom MOB";
+                p1.text = CreatedPlayer.name; ;
+                p1Combat.text = CreatedPlayer.name; ;
             }
             else if (creating == 2)
             {
                 player_2 = CreatedPlayer;
-                p2.text = "Custom MOB";
-                p2Combat.text = "Custom MOB";
+                p2.text = CreatedPlayer.name; ;
+                p2Combat.text = CreatedPlayer.name; ;
             }
-
-            AddToDataBaseFile(new string[] {'"'+"hp"+'"' + ": " +               CreatedPlayer.hp.ToString(),
-                                            '"'+"acc"+'"' + ": " +              CreatedPlayer.acc.ToString(),
-                                            '"'+"strenght"+'"' + ": " +         CreatedPlayer.strenght.ToString(),
-                                            '"'+"power"+'"' + ": " +            CreatedPlayer.power.ToString(),
-                                            '"'+"criticalChance"+'"' + ": " +   CreatedPlayer.criticalChance.ToString(),
-                                            '"'+"agility"+'"' + ": " +          CreatedPlayer.agility.ToString(),
-                                            '"'+"shield"+'"' + ": " +           CreatedPlayer.shield.ToString(),
-                                            '"'+"name"+'"' + ": " +             CreatedPlayer.name});
         }
         else
         {
-            if(creating == 1)
+            if (creating == 1)
             {
                 p1.text = "Invalid creation values";
                 player_1 = null;
             }
-            else if(creating == 2)
+            else if (creating == 2)
+            {
+                p2.text = "Invalid creation values";
+                player_2 = null;
+            }
+        }
+    }
+
+    public void submitAndSaveButton()
+    {
+        thirdMenu.SetActive(false);
+        firstMenu.SetActive(true);
+        secondMenu.SetActive(false);
+        fifthMenu.SetActive(false);
+
+        float n;
+
+        if (NameInput.text != "" && NameInput.text != "-" &&
+            float.TryParse(Hp.text, out n) &&
+            float.TryParse(Acc.text, out n) &&
+            float.TryParse(Strenght.text, out n) &&
+            float.TryParse(Power.text, out n) &&
+            float.TryParse(criticalchance.text, out n) &&
+            float.TryParse(agility.text, out n) &&
+            float.TryParse(shield.text, out n)
+            )
+        {
+            Character CreatedPlayer = new Character(float.Parse(Hp.text), float.Parse(Acc.text), float.Parse(Strenght.text), float.Parse(Power.text), float.Parse(criticalchance.text), float.Parse(agility.text), float.Parse(shield.text), NameInput.text);
+            CreatedPlayer.gun = database.itemDataBase[0];
+
+            if (creating == 1)
+            {
+                player_1 = CreatedPlayer;
+                p1.text = CreatedPlayer.name; ;
+                p1Combat.text = CreatedPlayer.name; ;
+            }
+            else if (creating == 2)
+            {
+                player_2 = CreatedPlayer;
+                p2.text = CreatedPlayer.name; ;
+                p2Combat.text = CreatedPlayer.name; ;
+            }
+
+            //Añadir coams al final de cada valor 
+            AddToDataBaseFile(new string[] {'"'+"hp"+'"' + ": " +               CreatedPlayer.hp.ToString()+",",
+                                            '"'+"acc"+'"' + ": " +              CreatedPlayer.acc.ToString()+",",
+                                            '"'+"strenght"+'"' + ": " +         CreatedPlayer.strenght.ToString()+",",
+                                            '"'+"power"+'"' + ": " +            CreatedPlayer.power.ToString()+",",
+                                            '"'+"criticalChance"+'"' + ": " +   CreatedPlayer.criticalChance.ToString()+",",
+                                            '"'+"agility"+'"' + ": " +          CreatedPlayer.agility.ToString()+",",
+                                            '"'+"shield"+'"' + ": " +           CreatedPlayer.shield.ToString()+",",
+                                            '"'+"name"+'"' + ": " + '"' +       CreatedPlayer.name + '"'
+            });
+
+            SetButtonsLoadMenu();
+        }
+        else
+        {
+            if (creating == 1)
+            {
+                p1.text = "Invalid creation values";
+                player_1 = null;
+            }
+            else if (creating == 2)
             {
                 p2.text = "Invalid creation values";
                 player_2 = null;
@@ -162,17 +225,20 @@ public class MenuScript : MonoBehaviour
     {
         string fileName = Application.dataPath + "/StreamingAssets/Characters.json";
 
-        List<string> txtLines = File.ReadAllLines(fileName).ToList();       
+        List<string> txtLines = File.ReadAllLines(fileName).ToList();
         txtLines[txtLines.Count - 2] = txtLines[txtLines.Count - 2] + ",";
 
-        txtLines.Insert(txtLines.Count - 2, "{"); //open object
-        for (int i=0;i<characterInfoToAdd.Length;i++)
+        txtLines.Insert(txtLines.Count - 1, "\t" + "{"); //open object
+        for (int i = 0; i < characterInfoToAdd.Length; i++)
         {
-            txtLines.Insert(txtLines.Count-2, characterInfoToAdd[i]);               //Insert the line you want to add last under the tag 'item1'.
+            txtLines.Insert(txtLines.Count - 1, "\t \t" + characterInfoToAdd[i]);               //Insert the line you want to add last under the tag 'item1'.
         }
-        txtLines.Insert(txtLines.Count - 2, "}"); //close object
+        txtLines.Insert(txtLines.Count - 1, "\t" + "}"); //close object
 
         File.WriteAllLines(fileName, txtLines.ToArray());                           //Add the lines including the new one.
+
+        string jsonObjectStr = "{" + string.Join("", characterInfoToAdd) + "}";
+        database.AddCharacterToDataBase(jsonObjectStr);
     }
 
     public void createButton_1()
@@ -210,39 +276,57 @@ public class MenuScript : MonoBehaviour
 
     void button_load(int button)
     {
-        if (loading == 1)
+        if (secondMenu.transform.GetChild(button).GetComponentInChildren<Text>().text != "-")
         {
-            string name = secondMenu.transform.GetChild(button).GetComponentInChildren<Text>().text;
-            Character aux = database.getCharacterByName(name);
-            if (aux != null)
+            if (loading == 1)
             {
-                player_1 = new Character(aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
-                player_1.gun = aux.gun;
-                p1.text = aux.name;
-                p1Combat.text = aux.name;
+                string name = secondMenu.transform.GetChild(button).GetComponentInChildren<Text>().text;
+                Character aux = database.getCharacterByName(name);
+                if (aux != null)
+                {
+                    player_1 = new Character(aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
+                    player_1.gun = aux.gun;
+                    p1.text = aux.name;
+                    p1Combat.text = aux.name;
+                }
+
+            }
+            else if (loading == 2)
+            {
+                string name = secondMenu.transform.GetChild(button).GetComponentInChildren<Text>().text;
+                Character aux = database.getCharacterByName(name);
+                if (aux != null)
+                {
+                    player_2 = new Character(aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
+                    player_2.gun = aux.gun;
+                    p2.text = aux.name;
+                    p2Combat.text = aux.name;
+                }
+
             }
 
+            firstMenu.SetActive(true);
+            secondMenu.SetActive(false);
+            thirdMenu.SetActive(false);
+            fourthMenu.SetActive(false);
+            fifthMenu.SetActive(false);
         }
-        else if (loading == 2)
+    }
+
+    public void deleteFromDataBase(int position)
+    {
+        string fileName = Application.dataPath + "/StreamingAssets/Characters.json";
+
+        List<string> txtLines = File.ReadAllLines(fileName).ToList();
+
+        for (int i = 0; i < 10; i++) //some magic numbers...I know is not the best option but 
         {
-            string name = secondMenu.transform.GetChild(button).GetComponentInChildren<Text>().text;
-            Character aux = database.getCharacterByName(name);
-            if (aux != null)
-            {
-                player_2 = new Character(aux.hp, aux.acc, aux.strenght, aux.power, aux.criticalChance, aux.agility, aux.shield, aux.name);
-                player_2.gun = aux.gun;
-                p2.text = aux.name;
-                p2Combat.text = aux.name;
-            }
-
+            txtLines.RemoveAt(10 * position - i);
         }
 
-        firstMenu.SetActive(true);
-        secondMenu.SetActive(false);
-        thirdMenu.SetActive(false);
-        fourthMenu.SetActive(false);
-        fifthMenu.SetActive(false);
-
+        File.WriteAllLines(fileName, txtLines.ToArray());//Add the lines including the new one.
+        database.DeleteCharacterFromDatabase(database.characterDataBase[position - 1]);
+        SetButtonsLoadMenu();
     }
 
     public void button_1()
@@ -308,6 +392,10 @@ public class MenuScript : MonoBehaviour
 
         firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText();
         firstMenu.transform.GetChild(0).GetChild(6).GetComponent<button_controller>().setPreviousText();
+
+        fourthMenu.transform.GetChild(0).GetComponent<Text>().color = initColor;
+        fourthMenu.transform.GetChild(1).GetComponent<Text>().color = initColor;
+        fourthMenu.transform.GetChild(2).GetComponent<Text>().text = "Simulating...";
     }
 
     public void main_menu_preserving_mobs()
@@ -426,7 +514,7 @@ public class MenuScript : MonoBehaviour
 
     public string[] getInfoMOB(int number)
     {
-        if (number != 1 && number != 2 ) return null;
+        if (number != 1 && number != 2) return null;
 
         if (number == 1 && player_1 != null)
             return new string[] {player_1.name,

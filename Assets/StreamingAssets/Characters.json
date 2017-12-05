@@ -18,7 +18,6 @@
         "agility": 1,
         "shield": 1,
         "name": "Human Mage"
-
     },
     {
         "hp": 110,
@@ -29,7 +28,6 @@
         "agility": 2,
         "shield": 2,
         "name": "Alien Tech"
-
     },
     {
         "hp": 120,
@@ -40,16 +38,5 @@
         "agility": 1,
         "shield": 3,
         "name": "Alien Mage"
-
-    },
-    {
-        "hp": 140,
-        "acc": 60,
-        "strenght": 14,
-        "power": 23,
-        "criticalChance": 14,
-        "agility": 2,
-        "shield": 3,
-        "name": "Enemy"
     }
-]   
+]     
