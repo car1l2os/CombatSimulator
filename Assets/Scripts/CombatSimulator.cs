@@ -47,17 +47,17 @@ public class CombatSimulator : MonoBehaviour {
 				
 			if (result == -1)
 				Battle ();
-			else if (result == 0) {
+			else if (result == 0) { //draw
 				player_1_wins++;
 				player_2_wins++;
 				player_1 = null;
 				player_2 = null;
-			} else if (result == 1) {
-				player_1_wins++;
+			} else if (result == 1) { //player 1 has died
+				player_2_wins++;
 				player_1 = null;
 				player_2 = null;
-			} else if (result == 2) {
-				player_2_wins++;
+			} else if (result == 2) { //player 2 has died
+				player_1_wins++;
 				player_1 = null;
 				player_2 = null;
 			}
@@ -66,9 +66,11 @@ public class CombatSimulator : MonoBehaviour {
 
     private void PrepareCombat()
     {
-        hitChance = 7.3f;   //HitChance = 100 * (1 - (25 / (pistol[2] + Character[1])))
-        cc = 7.3f;           //cc = (pistol[4] + Character[4])
-        cc2 = 7.3f;        //cc2 = (pistol[4] + Enemy[4])
+        /*
+         Garbage function
+         I'm going to leave it (for now) for possible changes in the simulator in the future
+         Start of AttackFromTo makes what this function used to do 
+         */
     }
 
     private int Simulate()
@@ -103,6 +105,9 @@ public class CombatSimulator : MonoBehaviour {
 
     private void AttackFromTo(ref Character from, ref Character to)
     {
+        //Less math if only calculed one time but needed more checks in function
+        hitChance = 100 * (1 - (25 / (from.gun.range + from.acc))); 
+        cc = from.gun.criticalChance + from.criticalChance;
 
         // from Hitting to
         if (UnityEngine.Random.Range(0, 100) <= hitChance)
@@ -128,8 +133,4 @@ public class CombatSimulator : MonoBehaviour {
         //eventLog.AddEvent(">>> Character with ID " + to.ID + " has " + to.hp + " HP now" +  "\n");
 
     }
-
-    
-
-
 }

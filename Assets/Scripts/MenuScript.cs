@@ -324,6 +324,8 @@ public class MenuScript : MonoBehaviour
             txtLines.RemoveAt(10 * position - i);
         }
 
+        txtLines[txtLines.Count - 2] = '\t' + "}";
+
         File.WriteAllLines(fileName, txtLines.ToArray());//Add the lines including the new one.
         database.DeleteCharacterFromDatabase(database.characterDataBase[position - 1]);
         SetButtonsLoadMenu();
@@ -389,6 +391,8 @@ public class MenuScript : MonoBehaviour
 
         firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText("No MOB selected");
         firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText("No MOB selected");
+        GameObject.Find("Player1_info").GetComponent<button_controller>().setPreviousText("No MOB selected");
+        GameObject.Find("Player2_info").GetComponent<button_controller>().setPreviousText("No MOB selected");
 
         firstMenu.transform.GetChild(0).GetChild(5).GetComponent<button_controller>().setPreviousText();
         firstMenu.transform.GetChild(0).GetChild(6).GetComponent<button_controller>().setPreviousText();
