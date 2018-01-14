@@ -1,8 +1,10 @@
 # CombatSimulator
 -Game Design &amp; Documentation
--Done in Unity 2017.1.1f1
 
 # Pathfinding
+
+## Version
+Done in Unity 2017.1.1f1
 
 ## Instructions
 - To create Characters just use the interface.
