@@ -1,5 +1,5 @@
 # CombatSimulator
--Game Design &amp; Documentation
+Game Design &amp; Documentation
 
 # Pathfinding
 
